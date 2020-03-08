@@ -55,6 +55,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
 
         setEventListeners()
         home_fragment_options.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_optionsFragment))
+        home_fragment_apps.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_openAppsFragment))
     }
 
     override fun onStart() {
@@ -151,6 +152,7 @@ class HomeFragment : BaseFragment(), OnLaunchAppListener {
             intent.addCategory(Intent.CATEGORY_LAUNCHER)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
             intent.component = name
+
             intent.resolveActivity(activity!!.packageManager)?.let {
                 launchActivity(view, intent)
             }

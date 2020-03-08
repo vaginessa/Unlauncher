@@ -45,7 +45,7 @@ class CustomiseAppsFragment : BaseFragment(), OnShitDoneToAppsListener {
             it?.let { apps ->
                 adapter.setItems(apps)
                 when (apps.size) {
-                    in 0..6 -> {
+                    in 0..7 -> {
                         customise_apps_fragment_add.visibility = View.VISIBLE
                     }
                     else -> {

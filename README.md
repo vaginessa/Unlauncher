@@ -1,14 +1,16 @@
-# Slim launcher
-> _All you need is less._
+<p align="center">
+  <img src="docs/assets/unlauncher-logo.png">
+</p>
 
-![CircleCI (all branches)](https://img.shields.io/circleci/project/github/sduduzog/slim-launcher.svg?style=plastic)
-![GitHub](https://img.shields.io/github/license/sduduzog/slim-launcher.svg?style=plastic)
-![F-Droid](https://img.shields.io/f-droid/v/com.sduduzog.slimlauncher.svg?style=plastic)
-![GitHub tag (latest SemVer)](https://img.shields.io/github/tag/sduduzog/slim-launcher.svg?style=plastic)
-![GitHub stars](https://img.shields.io/github/stars/sduduzog/slim-launcher.svg?style=social)
+<h1 align="center">
+  Unlauncher
+</h1>
 
-![Slim Launcher Logo](docs/assets/ic_launcher-web.png)
+![Android CI](https://github.com/jkuester/unlauncher/workflows/Android%20CI/badge.svg?branch=master)
 
+> _Freedom from your phone_
+
+<!-- 
 **Now available on Google Play and F-Droid!**
 
 [<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
@@ -16,29 +18,41 @@
      height="80">](https://play.google.com/store/apps/details?id=com.sduduzog.slimlauncher)
 [<img src="https://f-droid.org/badge/get-it-on.png"
      alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.sduduzog.slimlauncher/)
+     height="80">](https://f-droid.org/packages/com.sduduzog.slimlauncher/) -->
 
-## Background
->Slim launcher only allows you to use fewer apps on your phone. Giving you more time to enjoy life as it was intended. Also a perfect app for a minimalist lifestyle.
+The goal of Unlauncher is to provide a clean and simple Android experience. We believe you should have easy access to all of your apps without the distraction of bells, whistles, and notifications clamouring for your attention. You want to be able to use your phone, not have your phone use you!
 
-If you think you can come up with a better description, shoot submit an issue! I'm horrible at this marketing thing
+<p float="left">
+  <img height="724" width="400" src="docs/assets/home-screen-1.png">
+  <img height="724" width="400" src="docs/assets/home-screen-2.png">
+</p>
 
-# Contributions
+## About
 
-## Issues
-**1.** See something you don't like, or that can be made better. Create an issue for it. Of course, its not going to be everything that we might agree on, _like adding a yellow popup when phone screen turns on_ but I try to reason with you and make sure we're on the same page in terms of the direction the app is going.
+Features:
 
-**2.** I honestly don't always have the time or resources to fix issues that come up in released apps. If you see anywhere where you can assist, please do so. I'll try to meet you halfway by labeling issues as they come.
+- Top 8 spaces to pin apps
+- No app icons
+- Customizable app titles
+- Searchable drawer with all apps
+- Show/Hide the notification bar on your home screen
+- No wallpapers
+- Multiple color themes
 
-## Code reviews
-**3.** Whenever I get the chance, I work on implementing all these suggestions from app reviews, emails and feature-request issues into the app. But the process is still fairly slow. I do however need help reviewing the code for the beta channel, and possibly implementation of certain features. This is where you're most likely can suggest a feature and see it being implemented for the next release. To see progress, you don't need to wrte a single line of code but you just have to fork the repo and build the code from the `develop` branch and run the thing. Though don't be suprised if something is broken there, please do ask about it, sometimes I miss those. Also please;
-**4.** [Sign up as a tester](https://play.google.com/apps/testing/com.sduduzog.slimlauncher) to help with assessing any implementations that make it to the beta channel. Your opinion here is very, very vauable because your advise affects hundreds of users using this thing.
+## Project History
 
-## [Buy me a coffee](https://buymeacoff.ee/sduduzog)
-**5.** I won't lie, my motivation to continue working on this app comes from the great feedback I receive from the reviews on the Play Store and the emails people send to me. The fact that someone out there noticed the litle effort that I put into it gives me all the drive I need to type away code over and over again.
+This project is a downstream fork of the great [Slim Launcher](https://github.com/sduduzog/slim-launcher) by [sduduzog](https://github.com/sduduzog). The contributors to that project deserve all the credit for the beautiful layout of this app and most of its functionality.
 
-Feel you can do more? [Buy me a cup!](https://buymeacoff.ee/sduduzog). I'd really appreciate it!
+The main differentiator between Unlauncher and Slim Launcher lies in the number of apps the launcher gives you access too.  Slim Launcher takes the Spartan approach of only allowing access to seven apps. Unlauncher, on the other hand, allows you to pin eight apps to the home screen and then gives you access to all the rest of your apps through a new "Apps" button at the bottom of the home screen
 
-**6.** How do I acknowledge people who have contributed to the project and my growth as a developer? How do I start adding those heads we always find on big project READMEs? I want to do that for my supporters too.
+The goal of this project is continue to remain synchronized, where possible, with Slim Launcher and to submit any new contributions back upstream (if they align with the design philosophy and goals of Slim Launcher).
 
-Thank you for your time
+## Communication
+
+If you have any issues or questions, please log a [Github issue](https://github.com/jkuester/unlauncher/issues) for this repository.
+
+## Contributing
+
+Contributions are welcome! Simply open a pull request.
+
+If a monetary contribution is more your style, please consider buying [sduduzog](https://github.com/sduduzog) (the author of the original project) a [cup of coffee](https://buymeacoff.ee/sduduzog).

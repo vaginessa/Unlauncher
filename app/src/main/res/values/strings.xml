@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">Slim Launcher</string>
-    <string name="slim_url" translatable="false">http://sduduzog.github.io/slim-launcher/</string>
+    <string name="app_name" translatable="false">Unlauncher</string>
+    <string name="slim_url" translatable="false">https://github.com/jkuester/unlauncher</string>
     <string name="main_placeholder_clock" translatable="false">00:00</string>
     <string name="main_placeholder_date" translatable="false">Sat, Apr 20</string>
 
@@ -42,5 +42,6 @@
     <string name="remove_all_apps_dialog_title" translatable="false">Remove All Apps</string>
     <string name="remove_all_apps_dialog_message" translatable="false">"This action will not uninstall your apps."
     "It is just to confirm if you're clearing this list on purpose"</string>
+    <string name="main_fragment_apps">Apps</string>
 
 </resources>

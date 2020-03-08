@@ -14,7 +14,7 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.sduduzog.slimlauncher"
+        applicationId "com.jkuester.unlauncher"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 41
@@ -42,6 +42,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    lintOptions{
+        disable 'MissingTranslation'
+    }
 }
 
 dependencies {
@@ -61,6 +64,7 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment:1.0.0'
     implementation 'androidx.room:room-runtime:2.1.0'
     implementation "androidx.lifecycle:lifecycle-common-java8:2.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.room:room-compiler:2.1.0"
 
     //3rd party libs

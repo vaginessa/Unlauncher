@@ -21,7 +21,7 @@ import com.sduduzog.slimlauncher.utils.OnAppClickedListener
 import kotlinx.android.synthetic.main.add_app_fragment.*
 import java.util.*
 
-class AddAppFragment : BaseFragment(), OnAppClickedListener {
+open class AddAppFragment : BaseFragment(), OnAppClickedListener {
 
     override fun getFragmentView(): ViewGroup = add_app_fragment
 
