@@ -5,7 +5,7 @@
     android:id="@+id/open_apps_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.options.AddAppFragment">
+    tools:context=".ui.options.OpenAppsFragment">
 
     <EditText
         android:id="@+id/add_app_fragment_edit_text"

@@ -2,9 +2,7 @@ package com.sduduzog.slimlauncher.ui.options
 
 import android.content.ComponentName
 import android.content.Intent
-import androidx.navigation.Navigation
 import com.sduduzog.slimlauncher.data.model.App
-import kotlinx.android.synthetic.main.open_apps_fragment.*
 
 class OpenAppsFragment : AddAppFragment() {
 
