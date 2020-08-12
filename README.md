@@ -10,15 +10,9 @@
 
 > _Freedom from your phone_
 
-<!-- 
-**Now available on Google Play and F-Droid!**
-
-[<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png"
-     alt="Get it on Google Play"
-     height="80">](https://play.google.com/store/apps/details?id=com.sduduzog.slimlauncher)
 [<img src="https://f-droid.org/badge/get-it-on.png"
      alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/com.sduduzog.slimlauncher/) -->
+     height="80">](https://f-droid.org/packages/com.jkuester.unlauncher/)
 
 The goal of Unlauncher is to provide a clean and simple Android experience. We believe you should have easy access to all of your apps without the distraction of bells, whistles, and notifications clamouring for your attention. You want to be able to use your phone, not have your phone use you!
 
