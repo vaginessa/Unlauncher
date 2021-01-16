@@ -12,7 +12,7 @@ android {
         applicationId = "com.jkuester.unlauncher"
         minSdkVersion(21)
         targetSdkVersion(30)
-        versionName = "0.2.0"
+        versionName = "1.0.0"
         versionCode = 6
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
