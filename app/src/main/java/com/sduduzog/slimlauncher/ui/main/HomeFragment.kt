@@ -3,20 +3,27 @@ package com.sduduzog.slimlauncher.ui.main
 import android.content.*
 import android.content.pm.LauncherApps
 import android.os.Bundle
+import android.os.Process
 import android.os.UserManager
 import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.sduduzog.slimlauncher.BuildConfig
 import com.sduduzog.slimlauncher.R
+import com.sduduzog.slimlauncher.adapters.AddAppAdapter
 import com.sduduzog.slimlauncher.adapters.HomeAdapter
+import com.sduduzog.slimlauncher.data.model.App
 import com.sduduzog.slimlauncher.models.HomeApp
 import com.sduduzog.slimlauncher.models.MainViewModel
 import com.sduduzog.slimlauncher.utils.BaseFragment
+import com.sduduzog.slimlauncher.utils.OnAppClickedListener
 import com.sduduzog.slimlauncher.utils.OnLaunchAppListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -25,7 +32,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLaunchAppListener {
+class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLaunchAppListener, OnAppClickedListener {
 
     private lateinit var receiver: BroadcastReceiver
 
@@ -44,17 +51,32 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
         viewModel.apps.observe(viewLifecycleOwner, Observer { list ->
             list?.let { apps ->
                 adapter1.setItems(apps.filter {
-                    it.sortingIndex < 4
+                    it.sortingIndex < 3
                 })
                 adapter2.setItems(apps.filter {
-                    it.sortingIndex >= 4
+                    it.sortingIndex >= 3
                 })
+
+                // Since the app previously supported more than 6 apps, we need this as a transition to only
+                // allowing 6 home apps. This can be removed in the future when it is likely everyone has
+                // upgraded to a version that only supports 6 home apps.
+                if(apps.size > 6) {
+                    apps.subList(6, apps.size).forEach(viewModel::remove)
+                }
             }
         })
 
         setEventListeners()
         home_fragment_options.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_optionsFragment))
-        home_fragment_apps.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_homeFragment_to_openAppsFragment))
+
+        // Populate the app drawer
+        val openAppAdapter = AddAppAdapter(this)
+        app_drawer_fragment_list.adapter = openAppAdapter
+        viewModel.addAppViewModel.apps.observe(viewLifecycleOwner, Observer {
+            it?.let { apps ->
+                openAppAdapter.setItems(apps)
+            }
+        })
     }
 
     override fun onStart() {
@@ -68,6 +90,10 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
     override fun onResume() {
         super.onResume()
         updateClock()
+
+        viewModel.addAppViewModel.setInstalledApps(getInstalledApps())
+        viewModel.addAppViewModel.filterApps("")
+        app_drawer_edit_text.addTextChangedListener(onTextChangeListener)
     }
 
     override fun onStop() {
@@ -141,17 +167,7 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
     }
 
     override fun onLaunch(app: HomeApp, view: View) {
-        try {
-            val manager = requireContext().getSystemService(Context.USER_SERVICE) as UserManager
-            val launcher = requireContext().getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-
-            val componentName = ComponentName(app.packageName, app.activityName)
-            val userHandle = manager.getUserForSerialNumber(app.userSerial)
-
-            launcher.startMainActivity(componentName, userHandle, view.clipBounds, null)
-        } catch (e: Exception) {
-            // Do no shit yet
-        }
+        launchApp(app.packageName, app.activityName, app.userSerial)
     }
 
     override fun onBack(): Boolean {
@@ -160,12 +176,46 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
     }
 
     override fun onHome() {
-        home_fragment.transitionToEnd()
+        home_fragment.transitionToStart()
     }
 
     inner class ClockReceiver : BroadcastReceiver() {
         override fun onReceive(ctx: Context?, intent: Intent?) {
             updateClock()
+        }
+    }
+
+    override fun onAppClicked(app: App) {
+        launchApp(app.packageName, app.activityName, app.userSerial)
+        home_fragment.transitionToStart()
+    }
+
+    private fun launchApp(packageName: String, activityName: String, userSerial: Long) {
+        try {
+            val manager = requireContext().getSystemService(Context.USER_SERVICE) as UserManager
+            val launcher = requireContext().getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+
+            val componentName = ComponentName(packageName, activityName)
+            val userHandle = manager.getUserForSerialNumber(userSerial)
+
+            launcher.startMainActivity(componentName, userHandle, view?.clipBounds, null)
+        } catch (e: Exception) {
+            // Do no shit yet
+        }
+    }
+
+    private val onTextChangeListener: TextWatcher = object : TextWatcher {
+
+        override fun afterTextChanged(s: Editable?) {
+            // Do nothing
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Do nothing
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            viewModel.addAppViewModel.filterApps(s.toString())
         }
     }
 }
