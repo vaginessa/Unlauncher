@@ -18,14 +18,13 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.jkuester.unlauncher.datastore.UnlauncherApp
 import com.sduduzog.slimlauncher.R
-import com.sduduzog.slimlauncher.adapters.AddAppAdapter
+import com.sduduzog.slimlauncher.adapters.AppDrawerAdapter
 import com.sduduzog.slimlauncher.adapters.HomeAdapter
-import com.sduduzog.slimlauncher.data.model.App
 import com.sduduzog.slimlauncher.models.HomeApp
 import com.sduduzog.slimlauncher.models.MainViewModel
 import com.sduduzog.slimlauncher.utils.BaseFragment
-import com.sduduzog.slimlauncher.utils.OnAppClickedListener
 import com.sduduzog.slimlauncher.utils.OnLaunchAppListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_fragment.*
@@ -34,7 +33,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLaunchAppListener, OnAppClickedListener {
+class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLaunchAppListener {
 
     private lateinit var receiver: BroadcastReceiver
 
@@ -63,13 +62,12 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
 
         setEventListeners()
 
-        // Populate the app drawer
-        val openAppAdapter = AddAppAdapter(this)
-        app_drawer_fragment_list.adapter = openAppAdapter
+        val unlauncherAppRepo = getUnlauncherDataSource().unlauncherAppsRepo;
+        app_drawer_fragment_list.adapter =
+            AppDrawerAdapter(AppDrawerListener(), viewLifecycleOwner, unlauncherAppRepo)
+        // Send the apps to Unlauncher data source
         viewModel.addAppViewModel.apps.observe(viewLifecycleOwner, Observer {
-            it?.let { apps ->
-                openAppAdapter.setItems(apps)
-            }
+            it?.let { apps -> unlauncherAppRepo.setApps(apps) }
         })
         home_fragment.setTransitionListener(object : TransitionListener {
             override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
@@ -225,11 +223,6 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
         }
     }
 
-    override fun onAppClicked(app: App) {
-        launchApp(app.packageName, app.activityName, app.userSerial)
-        home_fragment.transitionToStart()
-    }
-
     private fun launchApp(packageName: String, activityName: String, userSerial: Long) {
         try {
             val manager = requireContext().getSystemService(Context.USER_SERVICE) as UserManager
@@ -262,6 +255,13 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             viewModel.addAppViewModel.filterApps(s.toString())
+        }
+    }
+
+    inner class AppDrawerListener {
+        fun onAppClicked(app: UnlauncherApp) {
+            launchApp(app.packageName, app.className, app.userSerial)
+            home_fragment.transitionToStart()
         }
     }
 }

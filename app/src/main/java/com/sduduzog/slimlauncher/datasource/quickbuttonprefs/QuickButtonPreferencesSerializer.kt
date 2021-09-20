@@ -1,4 +1,4 @@
-package com.sduduzog.slimlauncher.datasource
+package com.sduduzog.slimlauncher.datasource.quickbuttonprefs
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
@@ -8,7 +8,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 /**
- * Serializer for the [QuickButtonPreferences] object defined in unlauncher_data.proto.
+ * Serializer for the [QuickButtonPreferences] object defined in quick_button_preferences.proto.
  */
 object QuickButtonPreferencesSerializer : Serializer<QuickButtonPreferences> {
     override val defaultValue: QuickButtonPreferences = QuickButtonPreferences.getDefaultInstance()
