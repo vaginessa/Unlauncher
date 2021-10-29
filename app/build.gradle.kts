@@ -16,7 +16,7 @@ android {
         minSdkVersion(21)
         targetSdkVersion(30)
         versionName = "1.3.0"
-        versionCode = 11
+        versionCode = 12
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
 //        signingConfigs {
