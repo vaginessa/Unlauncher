@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import java.io.IOException
+import java.util.*
 
 class UnlauncherAppsRepository(
     private val unlauncherAppsStore: DataStore<UnlauncherApps>,
@@ -41,6 +42,7 @@ class UnlauncherAppsRepository(
         unlauncherAppsStore.updateData { unlauncherApps ->
             val unlauncherAppsBuilder = unlauncherApps.toBuilder()
             // Add any new apps
+            var appAdded = false
             apps.filter { app ->
                 findApp(
                     unlauncherAppsBuilder.appsList,
@@ -48,14 +50,12 @@ class UnlauncherAppsRepository(
                     app.activityName
                 ) == null
             }.forEach { app ->
-                val index =
-                    unlauncherAppsBuilder.appsList.indexOfFirst { unlauncherApp -> unlauncherApp.displayName > app.appName }
                 unlauncherAppsBuilder.addApps(
-                    if (index >= 0) index else unlauncherAppsBuilder.appsList.size,
                     UnlauncherApp.newBuilder().setPackageName(app.packageName)
                         .setClassName(app.activityName).setUserSerial(app.userSerial)
                         .setDisplayName(app.appName).setDisplayInDrawer(true)
                 )
+                appAdded = true
             }
             // Remove any apps that no longer exist
             unlauncherApps.appsList.filter { unlauncherApp ->
@@ -70,6 +70,9 @@ class UnlauncherAppsRepository(
                 )
             }
 
+            if(appAdded) {
+                sortAppsAlphabetically(unlauncherAppsBuilder)
+            }
             unlauncherAppsBuilder.build()
         }
     }
@@ -126,7 +129,10 @@ class UnlauncherAppsRepository(
                 val builder = currentApps.toBuilder()
                 val index = builder.appsList.indexOf(appToUpdate)
                 if (index >= 0) {
-                    builder.setApps(index, appToUpdate.toBuilder().setDisplayInDrawer(displayInDrawer))
+                    builder.setApps(
+                        index,
+                        appToUpdate.toBuilder().setDisplayInDrawer(displayInDrawer)
+                    )
                 }
                 builder.build()
             }
@@ -142,4 +148,11 @@ class UnlauncherAppsRepository(
             packageName == app.packageName && className == app.className
         }
     }
+}
+
+fun sortAppsAlphabetically(unlauncherAppsBuilder: UnlauncherApps.Builder) {
+    val sortedApps =
+        unlauncherAppsBuilder.appsList.sortedBy { it.displayName.toUpperCase(Locale.getDefault()) }
+    unlauncherAppsBuilder.clearApps()
+    unlauncherAppsBuilder.addAllApps(sortedApps)
 }
