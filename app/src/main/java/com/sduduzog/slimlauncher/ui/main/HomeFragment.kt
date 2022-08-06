@@ -18,6 +18,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jkuester.unlauncher.datastore.UnlauncherApp
 import com.sduduzog.slimlauncher.R
 import com.sduduzog.slimlauncher.adapters.AppDrawerAdapter
@@ -95,6 +96,12 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
         }
         if (!::appDrawerAdapter.isInitialized) {
             appDrawerAdapter.setAppFilter()
+        }
+
+        // scroll back to the top if user returns to this fragment
+        val layoutManager = app_drawer_fragment_list.layoutManager as LinearLayoutManager
+        if (layoutManager.findFirstCompletelyVisibleItemPosition() != 0) {
+            app_drawer_fragment_list.scrollToPosition(0)
         }
     }
 
