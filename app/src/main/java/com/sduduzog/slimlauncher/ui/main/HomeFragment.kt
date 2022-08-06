@@ -46,8 +46,8 @@ class HomeFragment(private val viewModel: MainViewModel) : BaseFragment(), OnLau
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val adapter1 = HomeAdapter(this)
         val adapter2 = HomeAdapter(this)
         home_fragment_list.adapter = adapter1
