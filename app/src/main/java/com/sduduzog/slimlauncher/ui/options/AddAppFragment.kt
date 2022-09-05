@@ -1,21 +1,13 @@
 package com.sduduzog.slimlauncher.ui.options
 
-import android.app.Activity
-import android.content.Context
-import android.content.pm.LauncherApps
 import android.os.Bundle
-import android.os.Process
-import android.os.UserManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
-import com.sduduzog.slimlauncher.BuildConfig
 import com.sduduzog.slimlauncher.R
 import com.sduduzog.slimlauncher.adapters.AddAppAdapter
 import com.sduduzog.slimlauncher.data.model.App
@@ -36,8 +28,8 @@ class AddAppFragment : BaseFragment(), OnAppClickedListener {
         return inflater.inflate(R.layout.add_app_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         val adapter = AddAppAdapter(this)
 
         add_app_fragment_list.adapter = adapter
@@ -62,9 +54,6 @@ class AddAppFragment : BaseFragment(), OnAppClickedListener {
     override fun onPause() {
         super.onPause()
         add_app_fragment_edit_text?.removeTextChangedListener(onTextChangeListener)
-
-        val inputMethodManager = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
     private val onTextChangeListener: TextWatcher = object : TextWatcher {
