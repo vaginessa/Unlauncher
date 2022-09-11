@@ -15,8 +15,8 @@ android {
         applicationId = "com.jkuester.unlauncher"
         minSdkVersion(21)
         targetSdkVersion(31)
-        versionName = "2.0.0-beta.2"
-        versionCode = 15
+        versionName = "2.0.0-beta.4"
+        versionCode = 16
         vectorDrawables { useSupportLibrary = true }
 //        signingConfigs {
 //            if (project.extra.has("RELEASE_STORE_FILE")) {
